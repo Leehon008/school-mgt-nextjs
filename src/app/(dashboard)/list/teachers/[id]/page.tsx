@@ -6,7 +6,24 @@ import { role } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 
-const SingleTeacherPage = () => {
+
+export async function generateStaticParams() {
+  // Replace this with your actual logic for fetching teacher IDs
+  const teacherIds = await fetchStudentIds(); // Example API function
+  return teacherIds.map((id) => ({ id: id.toString() })); // Ensure IDs are strings
+}
+
+// Mock API call (replace with actual logic)
+async function fetchStudentIds() {
+  return ["1", "2", "3", "4"]; // Replace with real IDs from your database or API
+}
+
+type Params = {
+  id: string;
+};
+
+const SingleTeacherPage= ({ params }: { params: Params }) => {
+  const { id } = params;
   return (
     <div className="flex-1 p-4 flex flex-col gap-4 xl:flex-row">
       {/* LEFT */}
