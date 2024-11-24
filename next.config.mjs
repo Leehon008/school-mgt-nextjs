@@ -3,8 +3,8 @@ const nextConfig = {
   basePath: "/school-mgt-nextjs",
   output: "export",
   reactStrictMode: true,
-  unoptimized: true,
   images: {
+  unoptimized: true, 
     remotePatterns: [{ hostname: "images.pexels.com" }],
   },
 };
