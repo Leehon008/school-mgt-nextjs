@@ -1,14 +1,11 @@
-# File: .github/workflows/publish.yml
 name: publish-to-github-pages
 on:
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -24,17 +21,20 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
-        uses: ./.github/workflows/setup-node
-
-      - name: Setup Pages ⚙️
-        uses: actions/configure-pages@v4
+      - name: Setup Node.js ⚙️
+        uses: actions/setup-node@v3
         with:
-          static_site_generator: next
+          node-version: 18
+          cache: "npm"
+
+      - name: Install dependencies 🔧
+        run: npm ci
 
       - name: Build with Next.js 🏗️
-        run: npx next build
-          
+        run: |
+          npx next build
+          npx next export
+
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
         with:
